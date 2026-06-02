@@ -1,0 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: theme('fontFamily.sans');
+  color: theme('colors.slate.900');
+  background: theme('colors.page.50');
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Keep the mobile bottom nav visually pinned to the viewport edge,
+   especially on iOS where the browser chrome and safe-area inset can
+   make fixed footers appear to float or scroll away at page bottom. */
+@supports (padding: env(safe-area-inset-bottom)) {
+  .mobile-bottom-nav {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+/* Selection highlight in accent amber */
+::selection {
+  background: theme('colors.accent.500');
+  color: theme('colors.navy.900');
+}
+
+/* Focus ring tuned to brand */
+:focus-visible {
+  outline: 2px solid theme('colors.navy.500');
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Scrollbar refinement */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: theme('colors.page.100');
+}
+::-webkit-scrollbar-thumb {
+  background: theme('colors.page.300');
+  border-radius: 999px;
+  border: 2px solid theme('colors.page.100');
+}
+::-webkit-scrollbar-thumb:hover {
+  background: theme('colors.slate.400');
+}
