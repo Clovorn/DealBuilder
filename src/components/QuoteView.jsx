@@ -243,10 +243,13 @@ function QuoteDocument({ quote, dealBundle }) {
                       // tier; fall back to list price when a 50+ price isn't on
                       // file. This keeps the per-line numbers consistent with the
                       // deal total (which is computed the same way at submit time).
+                      // Exception (Jun 2026): Dr. Coffee products always use List Price.
                       const p50 = it.price_50_plus;
-                      const catalogPrice = (p50 != null && p50 !== '' && Number(p50) > 0)
-                        ? Number(p50)
-                        : (it.list_price ?? 0);
+                      const catalogPrice = (it.vendor === 'Dr. Coffee')
+                        ? (it.list_price ?? 0)
+                        : (p50 != null && p50 !== '' && Number(p50) > 0)
+                          ? Number(p50)
+                          : (it.list_price ?? 0);
                       // Custom sell price (Purchase/Cash and Finance only,
                       // raise-only). The submit-time snapshot already strips
                       // overrides on other deal types, but we gate by deal

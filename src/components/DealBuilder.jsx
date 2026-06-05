@@ -45,6 +45,9 @@ const numOrNull = (v) => (v === '' || v == null ? null : Number(v));
  * When an item has no 50+ price on file we fall back to `list_price` so
  * nothing ever prices at $0 by accident.
  *
+ * Exception (Jun 2026): Dr. Coffee products always start from List Price
+ * regardless of deal type (lease, finance, or loan).
+ *
  * This is the price the catalog dictates, and it is the FLOOR for any
  * rep-entered sell price (see effectiveUnitPrice). Bundles are unaffected —
  * their pricing is computed entirely in bundleMath.js / bundlePricing and
@@ -52,6 +55,8 @@ const numOrNull = (v) => (v === '' || v == null ? null : Number(v));
  */
 function catalogUnitPrice(item) {
   if (!item) return 0;
+  // Dr. Coffee: always price from List Price (never Price 50+ units)
+  if (item.vendor === 'Dr. Coffee') return item.list_price ?? 0;
   const p50 = item.price_50_plus;
   if (p50 != null && p50 !== '' && Number(p50) > 0) return Number(p50);
   return item.list_price ?? 0;
